@@ -1,13 +1,27 @@
 import React from "react";
 import { useState } from "react";
+import {createClient} from '@supabase/supabase-js'
 
 function CreateCrew() {
   const [crewmate, setCrewmate] = useState({ Name: "", Speed: "", Color: "" });
+  const supabaseUrl = 'https://sjiuwfikoktxayqxbwgt.supabase.co'
+  const superbaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqaXV3Zmlrb2t0eGF5cXhid2d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODExMDk2NTcsImV4cCI6MTk5NjY4NTY1N30.8byNsXBBxX24xjUOXdLrum-BRnoafthu_40fFybJxC0"
 
+  const supabase = createClient(supabaseUrl, superbaseKey)
   const handelChange = (e) => {
     const { name, value } = e.target;
     setCrewmate({ ...crewmate, [name]: value });
+
+   
   };
+  const formSubmit = async (e) => {
+    e.preventDefault();
+    const { data, error } = await supabase
+      .from("Project 7")
+      .insert([{ Name: crewmate.Name, Speed: crewmate.Speed, Color: crewmate.Color }]);
+    console.log(data, error);
+    alert("Crewmate Created!");
+  }
   return (
     <div className=" text-center mt-32 mb-auto h-1/2 ">
       <h1 className="text-5xl font-bold">Create a New Crewmate</h1>
@@ -18,7 +32,7 @@ function CreateCrew() {
         height={10}
       />
 
-      <form action="">
+      <form onSubmit={formSubmit}>
         <div className="flex gap-8 justify-center">
           <div className=" bg-slate-700 p-9 rounded-xl">
             <label className="block text-2xl mb-2"> Name</label>
@@ -95,7 +109,7 @@ function CreateCrew() {
             {console.log(crewmate)}
           </div>
         </div>
-        <button className="p-4 bg-teal-600 rounded-xl mt-3 cursor-pointer hover:scale-105 transition-all">Create Crewmate</button>
+        <button type="submit" className="p-4 bg-teal-600 rounded-xl mt-3 cursor-pointer hover:scale-105 transition-all">Create Crewmate</button>
       </form>
     </div>
   );
