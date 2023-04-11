@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-function CreateCrew() {
+function UpdateCrew() {
   const [crewmate, setCrewmate] = useState({ Name: "", Speed: "", Color: "" });
   const supabaseUrl = "https://sjiuwfikoktxayqxbwgt.supabase.co";
   const superbaseKey =
@@ -13,20 +13,22 @@ function CreateCrew() {
     const { name, value } = e.target;
     setCrewmate({ ...crewmate, [name]: value });
   };
-  const formSubmit = async (e) => {
+
+  const formUpdate = async (e) => {
     e.preventDefault();
     const { data, error } = await supabase
       .from("Project 7")
-      .insert([
+      .update([
         { Name: crewmate.Name, Speed: crewmate.Speed, Color: crewmate.Color },
-      ]);
+      ])
+      .match({ Name: crewmate.Name });
     // console.log(data, error);
-    alert("Crewmate Created!");
+    alert("Crewmate Update! Go Back to Home Page to see the changes.");
   };
 
   return (
-    <div className=" text-center mt-20 mb-auto h-1/2 ">
-      <h1 className="text-5xl font-bold">Create a New Crewmate</h1>
+    <div className=" text-center mt-32 mb-auto h-1/2 ">
+      <h1 className="text-5xl font-bold">Update Your Crewmate:D</h1>
       <img
         src="https://www.pngmart.com/files/21/Among-Us-PNG-Isolated-Transparent.png"
         alt=""
@@ -34,7 +36,7 @@ function CreateCrew() {
         height={10}
       />
 
-      <form onSubmit={formSubmit}>
+      <form onSubmit={formUpdate}>
         <div className="flex gap-8 justify-center">
           <div className=" bg-slate-700 p-9 rounded-xl">
             <label className="block text-2xl mb-2"> Name</label>
@@ -115,11 +117,11 @@ function CreateCrew() {
           type="submit"
           className="p-4 bg-teal-600 rounded-xl mt-3 cursor-pointer hover:scale-105 transition-all"
         >
-          Create Crewmate
+          Update Crewmate
         </button>
       </form>
     </div>
   );
 }
 
-export default CreateCrew;
+export default UpdateCrew;
