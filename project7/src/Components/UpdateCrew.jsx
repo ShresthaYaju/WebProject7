@@ -27,7 +27,7 @@ function UpdateCrew() {
   };
 
   return (
-    <div className=" text-center mt-32 mb-auto h-1/2 ">
+    <div className=" text-center mt-20 mb-auto h-1/2 ">
       <h1 className="text-5xl font-bold">Update Your Crewmate:D</h1>
       <img
         src="https://www.pngmart.com/files/21/Among-Us-PNG-Isolated-Transparent.png"
